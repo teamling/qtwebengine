@@ -1,0 +1,50 @@
+name: build-ardour
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: windows-2022
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          submodules: 'recursive'
+      - name: Add msbuild to PATH
+        uses: microsoft/setup-msbuild@v1.3
+        with:
+          msbuild-architecture: x86
+      - name: Install Qt
+        uses: jurplel/install-qt-action@v3
+        with:
+          version: '6.4.3'
+          host: 'windows'
+          target: 'desktop'
+          arch: 'win64_msvc2019_64'
+          install-deps: 'true'
+          modules: 'qtconnectivity qtpositioning qtremoteobjects qtvirtualkeyboard qtwebchannel qtwebengine qtwebsockets qtwebview qt5compat qtpdf'
+          cache: 'true'
+          cache-key-prefix: 'install-qt-action'
+      - name: jom
+        run: |
+          choco install jom
+      - uses: ilammy/msvc-dev-cmd@v1
+      - name: Build
+        run: |
+          qt-configure-module . -webengine-proprietary-codecs
+          cmake --build . --parallel
+          dir
+      - name: Zip
+        run: |
+          C:\Program' 'Files\7-Zip\7z.exe a dist
+      - name: Artifact
+        uses: actions/upload-artifact@v3
+        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+        with:
+          name: qt-webengine
+          retention-days: 1
+          path: |
+            qt-webengine.zip
+
