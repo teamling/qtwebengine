@@ -27,9 +27,10 @@ jobs:
           modules: 'qtconnectivity qtpositioning qtremoteobjects qtvirtualkeyboard qtwebchannel qtwebengine qtwebsockets qtwebview qt5compat qtpdf'
           cache: 'true'
           cache-key-prefix: 'install-qt-action'
-      - name: jom
+      - name: install deps
         run: |
           choco install jom
+          pip install html5lib
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build
         run: |
