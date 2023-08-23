@@ -30,6 +30,7 @@ jobs:
       - name: install deps
         run: |
           choco install jom
+          choco install gperf
           pip install html5lib
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build
@@ -37,15 +38,15 @@ jobs:
           qt-configure-module . -webengine-proprietary-codecs
           cmake --build . --parallel
           dir
-      - name: Zip
-        run: |
-          C:\Program' 'Files\7-Zip\7z.exe a ./dist
-      - name: Artifact
-        uses: actions/upload-artifact@v3
-        if: ${{ !startsWith(github.ref, 'refs/tags/') }}
-        with:
-          name: qt-webengine
-          retention-days: 1
-          path: |
-            qt-webengine.zip
+      # - name: Zip
+      #   run: |
+      #     C:\Program' 'Files\7-Zip\7z.exe a ./dist
+      # - name: Artifact
+      #   uses: actions/upload-artifact@v3
+      #   if: ${{ !startsWith(github.ref, 'refs/tags/') }}
+      #   with:
+      #     name: qt-webengine
+      #     retention-days: 1
+      #     path: |
+      #       qt-webengine.zip
 
