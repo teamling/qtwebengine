@@ -39,7 +39,7 @@ jobs:
           dir
       - name: Zip
         run: |
-          C:\Program' 'Files\7-Zip\7z.exe a dist
+          C:\Program' 'Files\7-Zip\7z.exe a ./dist
       - name: Artifact
         uses: actions/upload-artifact@v3
         if: ${{ !startsWith(github.ref, 'refs/tags/') }}
