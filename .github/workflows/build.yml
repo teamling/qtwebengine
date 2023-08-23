@@ -1,4 +1,4 @@
-name: build-ardour
+name: build-qt-webengine
 
 on:
   workflow_dispatch:
