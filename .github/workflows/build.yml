@@ -29,8 +29,8 @@ jobs:
           cache-key-prefix: 'install-qt-action'
       - name: install deps
         run: |
-          choco install jom
-          choco install gperf
+          choco install jom gperf winflexbison3 pkgconfiglite
+          vcpkg install snappy
           pip install html5lib
       - uses: ilammy/msvc-dev-cmd@v1
       - name: Build
